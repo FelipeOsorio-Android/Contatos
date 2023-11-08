@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -45,9 +44,9 @@ class MainActivity : ComponentActivity() {
 @Composable
 private fun App(content: @Composable () -> Unit) {
     ContatosTheme {
-        Surface {
+
         val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
-            
+        Surface {
             Scaffold(
                 Modifier
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -76,16 +75,12 @@ private fun App(content: @Composable () -> Unit) {
                         navigationIcon = {
                             Icon(
                                 imageVector = Icons.Default.ArrowBack,
-                                contentDescription = null
+                                contentDescription = null,
+                                Modifier
+                                    .padding(start = 16.dp)
                             )
                         },
                         actions = {
-                            IconButton(onClick = { /*TODO*/ }) {
-                                Icon(
-                                    imageVector = Icons.Default.Add,
-                                    contentDescription = null
-                                )
-                            }
                             IconButton(onClick = { /*TODO*/ }) {
                                 Icon(
                                     imageVector = Icons.Default.Search,

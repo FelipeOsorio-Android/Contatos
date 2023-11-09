@@ -1,8 +1,10 @@
 package devandroid.felipe.contatos
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -28,13 +30,18 @@ import androidx.compose.ui.unit.sp
 import devandroid.felipe.contatos.ui.screens.ContactListScreen
 import devandroid.felipe.contatos.ui.theme.ContatosTheme
 import devandroid.felipe.contatos.ui.theme.Green
+import devandroid.felipe.contatos.ui.viewmodels.ContactListScreenViewModel
 
 class MainActivity : ComponentActivity() {
+
+    private val viewModel by viewModels<ContactListScreenViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             App {
-                ContactListScreen()
+                ContactListScreen(viewModel = viewModel, onClick = {
+                    startActivity(Intent(this, ContactFormActivity::class.java))
+                })
             }
         }
     }

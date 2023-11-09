@@ -1,9 +1,11 @@
 package devandroid.felipe.contatos.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
@@ -23,11 +25,16 @@ import androidx.compose.ui.unit.sp
 import devandroid.felipe.contatos.ui.theme.Niagara
 
 @Composable
-fun AdditionalItem(icon: ImageVector, title: String) {
+fun AdditionalItem(
+    icon: ImageVector,
+    title: String,
+    onClick: () -> Unit = {}
+) {
     Row(
         Modifier
             .fillMaxWidth()
-            .padding(vertical = 8.dp),
+            .height(60.dp)
+            .clickable { onClick() },
         verticalAlignment = Alignment.CenterVertically
     ) {
        Box(

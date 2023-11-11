@@ -14,24 +14,41 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Image
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import coil.compose.AsyncImage
+import devandroid.felipe.contatos.R
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
-fun DialogEditImage(onDismissRequest: () -> Unit = {}) {
+fun DialogEditImage(
+    onLoadImage: (String) -> Unit = {},
+    onDismissRequest: () -> Unit = {}
+) {
+
+    var textUrl by rememberSaveable {
+        mutableStateOf("")
+    }
+
+    val image by rememberSaveable(textUrl) {
+        mutableStateOf(textUrl)
+    }
+
 
     Dialog(onDismissRequest = { onDismissRequest() }) {
         Card(
@@ -53,15 +70,18 @@ fun DialogEditImage(onDismissRequest: () -> Unit = {}) {
                         .clip(shape = CircleShape)
                 ) {
                     AsyncImage(
-                        model = "https://images.pexels.com/photos/18945259/pexels-photo-18945259/free-photo-of-morena-ardente-queimadura-combustao.jpeg",
+                        model = image,
                         contentDescription = null,
-                        contentScale = ContentScale.Crop
+                        contentScale = ContentScale.Crop,
+                        placeholder = painterResource(id = R.drawable.placeholder),
+                        fallback = painterResource(id = R.drawable.placeholder),
+                        error = painterResource(id = R.drawable.placeholder)
                     )
                 }
 
                 OutlinedTextField(
-                    value = "",
-                    onValueChange = {},
+                    value = textUrl,
+                    onValueChange = { textUrl = it },
                     Modifier
                         .fillMaxWidth(),
                     label = { Text(text = "URL") },
@@ -74,7 +94,7 @@ fun DialogEditImage(onDismissRequest: () -> Unit = {}) {
                 )
 
                 Button(
-                    onClick = { /*TODO*/ },
+                    onClick = { onLoadImage(image) },
                     Modifier
                         .fillMaxWidth(),
                     shape = RoundedCornerShape(5.dp)

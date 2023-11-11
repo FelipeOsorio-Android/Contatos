@@ -1,5 +1,6 @@
 package devandroid.felipe.contatos.ui.screens
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,17 +13,19 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Call
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material3.FilledIconButton
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.BottomCenter
+import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -44,24 +47,27 @@ fun AddContactFormScreen() {
             Modifier
                 .height(300.dp)
                 .width(300.dp)
-                .clip(shape = CircleShape)
         ) {
 
             AsyncImage(
                 model = "https://images.pexels.com/photos/18945259/pexels-photo-18945259/free-photo-of-morena-ardente-queimadura-combustao.jpeg",
                 contentDescription = null,
-                contentScale = ContentScale.Crop
+                Modifier
+                    .height(250.dp)
+                    .width(250.dp)
+                    .clip(shape = CircleShape)
+                    .align(Center),
+                contentScale = ContentScale.Crop,
             )
 
-            FilledIconButton(
+            Button(
                 onClick = { /*TODO*/ },
                 Modifier
-                    .align(BottomCenter)
+                    .align(BottomCenter),
+                border = BorderStroke(width = 4.dp, color = Color.White),
+                elevation = ButtonDefaults.buttonElevation(8.dp)
             ) {
-                Icon(
-                    imageVector = Icons.Default.Edit,
-                    contentDescription = null,
-                )
+                Text("Carregar Foto", color = Color.White)
             }
         }
 

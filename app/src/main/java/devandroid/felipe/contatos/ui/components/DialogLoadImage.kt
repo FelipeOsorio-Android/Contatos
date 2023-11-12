@@ -1,8 +1,10 @@
 package devandroid.felipe.contatos.ui.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -13,18 +15,17 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Image
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
@@ -33,21 +34,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import coil.compose.AsyncImage
 import devandroid.felipe.contatos.R
+import devandroid.felipe.contatos.ui.theme.Niagara
 
 
 @Composable
-fun DialogEditImage(
-    onLoadImage: (String) -> Unit = {},
-    onDismissRequest: () -> Unit = {}
+fun DialogLoadImage(
+    textUrl: String = "",
+    isEnabledButtonDialog: Boolean = false,
+    onLoadImageDialog: () -> Unit = {},
+    onDismissRequest: () -> Unit = {},
+    onValueChangeDialog: (String) -> Unit = {}
 ) {
-
-    var textUrl by rememberSaveable {
-        mutableStateOf("")
-    }
-
-    val image by rememberSaveable(textUrl) {
-        mutableStateOf(textUrl)
-    }
 
 
     Dialog(onDismissRequest = { onDismissRequest() }) {
@@ -59,6 +56,8 @@ fun DialogEditImage(
         ) {
             Column(
                 Modifier
+                    .fillMaxSize()
+                    .background(color = Color.White)
                     .padding(start = 16.dp, top = 16.dp, end = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -70,7 +69,7 @@ fun DialogEditImage(
                         .clip(shape = CircleShape)
                 ) {
                     AsyncImage(
-                        model = image,
+                        model = textUrl,
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
                         placeholder = painterResource(id = R.drawable.placeholder),
@@ -81,7 +80,7 @@ fun DialogEditImage(
 
                 OutlinedTextField(
                     value = textUrl,
-                    onValueChange = { textUrl = it },
+                    onValueChange = { onValueChangeDialog(it) },
                     Modifier
                         .fillMaxWidth(),
                     label = { Text(text = "URL") },
@@ -90,14 +89,24 @@ fun DialogEditImage(
                         Icon(imageVector = Icons.Default.Image, contentDescription = null)
                     },
                     singleLine = true,
-                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done)
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+                    colors = TextFieldDefaults.colors(
+                        focusedLabelColor = Niagara,
+                        focusedIndicatorColor = Niagara,
+                        focusedContainerColor = Color.White,
+                        unfocusedContainerColor = Color.White
+                    )
                 )
 
                 Button(
-                    onClick = { onLoadImage(image) },
+                    onClick = { onLoadImageDialog() },
                     Modifier
                         .fillMaxWidth(),
-                    shape = RoundedCornerShape(5.dp)
+                    shape = RoundedCornerShape(5.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Niagara
+                    ),
+                    enabled = isEnabledButtonDialog
                 ) {
                     Text(text = "Carregar")
                 }
@@ -108,6 +117,6 @@ fun DialogEditImage(
 
 @Preview(showBackground = true)
 @Composable
-fun DialogEditImagePreview() {
-    DialogEditImage()
+fun DialogLoadImagePreview() {
+    DialogLoadImage()
 }

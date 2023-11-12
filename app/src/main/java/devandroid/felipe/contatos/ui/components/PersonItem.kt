@@ -52,7 +52,6 @@ fun PersonItemPreview() {
         ContactModel(
             name = "Felipe",
             phoneNumber = "17991904806",
-            image = "https://images.pexels.com/photos/18945259/pexels-photo-18945259/free-photo-of-morena-ardente-queimadura-combustao.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
         )
     )
 }

@@ -1,12 +1,17 @@
 package devandroid.felipe.contatos.stateholders
 
-import androidx.compose.runtime.Composable
-
 data class AddContactFormScreenUiState(
     val name: String = "",
     val phoneNumber: String = "",
-    val image: String? = null,
+    val textUrl: String = "",
+    val isError: Boolean = false,
+    val isEnabledButtonDialog: Boolean = false,
     val showDialog: Boolean = false,
+    val validateContact: Boolean = false,
     val isShowDialog: () -> Unit = {},
-    val onDialogShow: @Composable () -> Unit = {}
+    val onClearField: (String) -> Unit = {},
+    val onDismissRequest: () -> Unit = {},
+    val onValueChangeDialog: (String) -> Unit = {},
+    val onLoadImageDialog: () -> Unit = {},
+    val onValueChange: (String, String) -> Unit = { _, _ -> }
 )

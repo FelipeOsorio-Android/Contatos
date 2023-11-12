@@ -17,7 +17,7 @@ class ContactFormActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            AddContactFormScreen(viewModel = viewModel)
+            AddContactFormScreen(viewModel = viewModel, onSaveClick = { finish() })
         }
     }
 }

@@ -21,7 +21,8 @@ class ContactListScreenViewModel: ViewModel() {
         viewModelScope.launch {
             contactDao.getAllContacts().collect { contactList ->
                 _uiState.value = _uiState.value.copy(
-                    contactList = contactList
+                    contactList = contactList,
+                    allContacts = contactList.size
                 )
             }
         }

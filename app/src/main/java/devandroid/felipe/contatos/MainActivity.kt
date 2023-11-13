@@ -21,6 +21,8 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -35,10 +37,13 @@ import devandroid.felipe.contatos.ui.viewmodels.ContactListScreenViewModel
 class MainActivity : ComponentActivity() {
 
     private val viewModel by viewModels<ContactListScreenViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            App {
+            val getAmountContacts by viewModel.uiState.collectAsState()
+
+            App(amountContacts = getAmountContacts.allContacts) {
                 ContactListScreen(viewModel = viewModel, onClick = {
                     startActivity(Intent(this, ContactFormActivity::class.java))
                 })
@@ -49,7 +54,7 @@ class MainActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun App(content: @Composable () -> Unit) {
+private fun App(amountContacts: Int = 0, content: @Composable () -> Unit) {
     ContatosTheme {
 
         val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
@@ -67,13 +72,14 @@ private fun App(content: @Composable () -> Unit) {
                                         maxLines = 1
                                     )
                                     Text(
-                                        text = "100 contatos",
+                                        text = if(amountContacts == 1) "$amountContacts contato"
+                                        else "$amountContacts contatos",
                                         fontSize = 14.sp,
                                         maxLines = 1
                                     )
                                 }
                         },
-                        colors = TopAppBarDefaults.smallTopAppBarColors(
+                        colors = TopAppBarDefaults.topAppBarColors(
                             containerColor = Green,
                             titleContentColor = Color.White,
                             actionIconContentColor = Color.White,

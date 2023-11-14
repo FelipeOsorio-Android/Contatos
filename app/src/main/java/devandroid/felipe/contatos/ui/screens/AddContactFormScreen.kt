@@ -41,6 +41,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
@@ -96,7 +97,8 @@ fun AddContactFormScreen(
                     isEnabledButtonDialog = isEnabledButtonDialog,
                     onDismissRequest = { onDismissRequest() },
                     onValueChangeDialog = { onValueChangeDialog(it) },
-                    onLoadImageDialog = { onLoadImageDialog() }
+                    onLoadImageDialog = { onLoadImageDialog() },
+                    onClearField = { onClearField(it) }
                 )
             } else {
                 AsyncImage(
@@ -133,17 +135,17 @@ fun AddContactFormScreen(
 
         OutlinedTextField(
             value = name,
-            onValueChange = { onValueChange("name", it) },
+            onValueChange = { onValueChange("fieldName", it) },
             Modifier
                 .fillMaxWidth(),
-            label = { Text(text = "Nome") },
+            label = { Text(text = stringResource(R.string.name)) },
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = Color.White,
                 focusedIndicatorColor = Niagara,
                 focusedLabelColor = Niagara,
                 unfocusedContainerColor = Color.White,
             ),
-            placeholder = { Text(text = "Nome do Contato") },
+            placeholder = { Text(text = stringResource(R.string.full_name)) },
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Person,
@@ -152,7 +154,7 @@ fun AddContactFormScreen(
             },
             trailingIcon = {
                 IconButton(
-                    onClick = { onClearField("name") }
+                    onClick = { onClearField("fieldName") }
                 ) {
                     if (name.isNotEmpty()) {
                         Icon(
@@ -171,10 +173,10 @@ fun AddContactFormScreen(
 
         OutlinedTextField(
             value = phoneNumber,
-            onValueChange = { onValueChange("phone", it) },
+            onValueChange = { onValueChange("fieldPhone", it) },
             Modifier
                 .fillMaxWidth(),
-            label = { Text(text = "Telefone") },
+            label = { Text(text = stringResource(R.string.contact_number)) },
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = Color.White,
                 focusedIndicatorColor = Niagara,
@@ -190,7 +192,7 @@ fun AddContactFormScreen(
             },
             trailingIcon = {
                 IconButton(
-                    onClick = { onClearField("phone") }
+                    onClick = { onClearField("fieldPhone") }
                 ) {
                     if (phoneNumber.isNotEmpty()) {
                         Icon(
@@ -209,7 +211,7 @@ fun AddContactFormScreen(
             supportingText = {
                 if(isError) {
                     Text(
-                        text = "Numero Invalido",
+                        text = stringResource(R.string.invalid_number),
                         color = MaterialTheme.colorScheme.error
                     )
                 }
@@ -225,7 +227,7 @@ fun AddContactFormScreen(
             colors = ButtonDefaults.buttonColors(Niagara),
             enabled = isEnable
         ) {
-            Text(text = "Salvar", fontSize = 16.sp)
+            Text(text = stringResource(R.string.save), fontSize = 16.sp)
         }
     }
 }

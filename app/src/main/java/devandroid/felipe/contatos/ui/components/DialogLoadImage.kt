@@ -13,11 +13,13 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Image
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
@@ -28,6 +30,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -43,6 +46,7 @@ fun DialogLoadImage(
     isEnabledButtonDialog: Boolean = false,
     onLoadImageDialog: () -> Unit = {},
     onDismissRequest: () -> Unit = {},
+    onClearField:(String) -> Unit = {},
     onValueChangeDialog: (String) -> Unit = {}
 ) {
 
@@ -83,10 +87,20 @@ fun DialogLoadImage(
                     onValueChange = { onValueChangeDialog(it) },
                     Modifier
                         .fillMaxWidth(),
-                    label = { Text(text = "URL") },
-                    placeholder = { Text(text = "Url da Imagem/Foto") },
+                    label = { Text(text = stringResource(id = R.string.url)) },
+                    placeholder = { Text(text = stringResource(R.string.url)) },
                     leadingIcon = {
                         Icon(imageVector = Icons.Default.Image, contentDescription = null)
+                    },
+                    trailingIcon = {
+                        IconButton(onClick = { onClearField("fieldUrl") }) {
+                            if(textUrl.isNotEmpty()) {
+                                Icon(
+                                    imageVector = Icons.Default.Close,
+                                    contentDescription = null
+                                )
+                            }
+                        }
                     },
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
@@ -108,7 +122,7 @@ fun DialogLoadImage(
                     ),
                     enabled = isEnabledButtonDialog
                 ) {
-                    Text(text = "Carregar")
+                    Text(text = stringResource(R.string.load))
                 }
             }
         }

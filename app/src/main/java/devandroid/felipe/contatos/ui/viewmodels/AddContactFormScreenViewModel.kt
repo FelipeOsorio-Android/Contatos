@@ -53,13 +53,13 @@ class AddContactFormScreenViewModel: ViewModel() {
                 },
                 onValueChange = { field, newValue ->
                     when(field) {
-                        "name" -> {
+                        "fieldName" -> {
                             _uiState.value = _uiState.value.copy(
                                 name = newValue
                             )
                         }
 
-                        "phone" -> {
+                        "fieldPhone" -> {
                             _uiState.value = _uiState.value.copy(
                                 phoneNumber = newValue
                             )
@@ -67,23 +67,44 @@ class AddContactFormScreenViewModel: ViewModel() {
                     }
                     _uiState.value = _uiState.value.copy(
                         validateContact = _uiState.value.name.isNotEmpty()
-                                && _uiState.value.phoneNumber.isNotEmpty(),
+                                && _uiState.value.phoneNumber.isNotEmpty()
+                                && _uiState.value.phoneNumber.length == 9,
                         isError = _uiState.value.phoneNumber.length > 9
                     )
                 },
                 onClearField = { field ->
                     when(field) {
-                        "name" -> {
+                        "fieldName" -> {
                             _uiState.value = _uiState.value.copy(
                                 name = ""
                             )
                         }
 
-                        "phone" -> {
+                        "fieldPhone" -> {
                             _uiState.value = _uiState.value.copy(
                                 phoneNumber = ""
                             )
                         }
+
+                        "fieldUrl" -> {
+                            _uiState.value = _uiState.value.copy(
+                                textUrl = ""
+                            )
+                        }
+                    }
+                    _uiState.value = _uiState.value.copy(
+                        validateContact = _uiState.value.name.isNotEmpty()
+                                && _uiState.value.phoneNumber.isNotEmpty()
+                                && _uiState.value.phoneNumber.length == 9
+                    )
+                    if (_uiState.value.textUrl.isNotEmpty()) {
+                        _uiState.value = _uiState.value.copy(
+                            isEnabledButtonDialog = true
+                        )
+                    } else {
+                        _uiState.value = _uiState.value.copy(
+                            isEnabledButtonDialog = false
+                        )
                     }
                 }
             )

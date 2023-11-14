@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">Contatos</string>
     <string name="title_activity_contact_form">ContactFormActivity</string>
+    <string name="load">Carregar</string>
+    <string name="url">Url</string>
+    <string name="name">Nome</string>
+    <string name="full_name">Nome Completo</string>
+    <string name="contact_number">Telefone</string>
+    <string name="invalid_number">Numero Invalido</string>
+    <string name="save">Salvar</string>
+    <string name="contacts">Contatos</string>
 </resources>

@@ -1,4 +1,4 @@
-package devandroid.felipe.contatos
+package devandroid.felipe.contatos.ui.activitys
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

@@ -1,16 +1,18 @@
 package devandroid.felipe.contatos.ui.viewmodels
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import devandroid.felipe.contatos.dao.ContactDao
+import devandroid.felipe.contatos.repository.ContatcRepository
 import devandroid.felipe.contatos.stateholders.ContactListScreenUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class ContactListScreenViewModel: ViewModel() {
+class ContactListScreenViewModel(application: Application): AndroidViewModel(application) {
 
-    private val contactDao by lazy { ContactDao() }
+
+    private val myRepository = ContatcRepository(application)
 
     private val _uiState: MutableStateFlow<ContactListScreenUiState> =
         MutableStateFlow(ContactListScreenUiState())
@@ -19,10 +21,10 @@ class ContactListScreenViewModel: ViewModel() {
 
     init {
         viewModelScope.launch {
-            contactDao.getAllContacts().collect { contactList ->
+            myRepository.listContact.collect { listContact ->
                 _uiState.value = _uiState.value.copy(
-                    contactList = contactList,
-                    allContacts = contactList.size
+                    contactList = listContact,
+                    allContacts = listContact.size
                 )
             }
         }

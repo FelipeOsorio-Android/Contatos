@@ -33,6 +33,7 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment.Companion.BottomCenter
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
@@ -54,6 +55,7 @@ import devandroid.felipe.contatos.stateholders.AddContactFormScreenUiState
 import devandroid.felipe.contatos.ui.components.DialogLoadImage
 import devandroid.felipe.contatos.ui.theme.Niagara
 import devandroid.felipe.contatos.ui.viewmodels.AddContactFormScreenViewModel
+import kotlinx.coroutines.launch
 
 
 @Composable
@@ -114,7 +116,7 @@ fun AddContactFormScreen(
                     fallback = painterResource(id = R.drawable.placeholder),
                     error = painterResource(id = R.drawable.placeholder),
 
-                )
+                    )
             }
 
             IconButton(
@@ -209,7 +211,7 @@ fun AddContactFormScreen(
             ),
             prefix = { Text(text = "+55 17 ") },
             supportingText = {
-                if(isError) {
+                if (isError) {
                     Text(
                         text = stringResource(R.string.invalid_number),
                         color = MaterialTheme.colorScheme.error
@@ -234,11 +236,14 @@ fun AddContactFormScreen(
 
 @Composable
 fun AddContactFormScreen(viewModel: AddContactFormScreenViewModel, onSaveClick: () -> Unit) {
+    val scope = rememberCoroutineScope()
     val uiState by viewModel.uiState.collectAsState()
 
     AddContactFormScreen(uiState = uiState, onSaveClick = {
-        viewModel.saveContact()
-        onSaveClick()
+        scope.launch {
+            viewModel.saveContact()
+            onSaveClick()
+        }
     })
 }
 

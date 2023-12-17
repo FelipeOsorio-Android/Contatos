@@ -1,17 +1,19 @@
 package devandroid.felipe.contatos.ui.viewmodels
 
-import androidx.lifecycle.ViewModel
-import devandroid.felipe.contatos.dao.ContactDao
-import devandroid.felipe.contatos.model.ContactModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import devandroid.felipe.contatos.database.entities.ContactEntity
+import devandroid.felipe.contatos.repository.ContatcRepository
 import devandroid.felipe.contatos.sample.sampleImage
 import devandroid.felipe.contatos.stateholders.AddContactFormScreenUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
-class AddContactFormScreenViewModel: ViewModel() {
+class AddContactFormScreenViewModel(application: Application): AndroidViewModel(application) {
 
-    private val contactDao by lazy { ContactDao() }
+
+    private val myRepository = ContatcRepository(application)
 
     private val _uiState: MutableStateFlow<AddContactFormScreenUiState> =
         MutableStateFlow(AddContactFormScreenUiState())
@@ -111,16 +113,16 @@ class AddContactFormScreenViewModel: ViewModel() {
         }
     }
 
-    fun saveContact() {
+   suspend fun saveContact() {
         _uiState.value.run {
-            val contact = ContactModel(
+            val contact = ContactEntity(
                 name = name,
                 phoneNumber = phoneNumber,
                 image = textUrl.ifEmpty { sampleImage }
 
             )
 
-            contactDao.saveContact(contact)
+            myRepository.save(contact)
         }
     }
 }

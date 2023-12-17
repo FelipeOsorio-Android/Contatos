@@ -1,8 +1,8 @@
 package devandroid.felipe.contatos.stateholders
 
-import devandroid.felipe.contatos.model.ContactModel
+import devandroid.felipe.contatos.database.entities.ContactEntity
 
 data class ContactListScreenUiState(
-    val contactList: List<ContactModel> = emptyList(),
+    val contactList: List<ContactEntity> = emptyList(),
     val allContacts: Int = 0
 )

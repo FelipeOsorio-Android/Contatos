@@ -17,3 +17,4 @@ Para a criação da UI do app eu fiz uma "copia" com algumas alterações da scr
 - Gerenciamento de estados como manter ou atualizar utilizando o padrao MVVM com o ViewModel e StateFlow
 - Utilização do Coil (para pegar imagens da internet)
 - Componentes do material como TopAppBar, Dialog entre outros que foram utilizados no projeto
+- Persistencia de dados com o Room
